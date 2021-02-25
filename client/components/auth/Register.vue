@@ -33,7 +33,7 @@
           v-model="user.lastName"
           :error-messages="errors"
           name="last name"
-          label="last Name"
+          label="Last Name"
           outlined
           class="required mb-1" />
       </validation-provider>
