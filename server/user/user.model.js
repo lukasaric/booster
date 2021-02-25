@@ -1,10 +1,10 @@
 'use strict';
 
-const { Model } = require('sequelize');
 const bcrypt = require('bcrypt');
 const compact = require('lodash/compact');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
+const { Model } = require('sequelize');
 const pick = require('lodash/pick');
 const { Role } = require('../../common/config');
 
@@ -69,8 +69,8 @@ class User extends Model {
     };
   }
 
-  static associate({}) {
-    //
+  static associate() {
+
   }
 
   static options() {

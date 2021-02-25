@@ -4,6 +4,7 @@ const Audience = require('../common/auth/audience');
 const { createError } = require('../common/errors');
 const HttpStatus = require('http-status');
 const pick = require('lodash/pick');
+const { User } = require('../common/database');
 
 const { CONFLICT, CREATED } = HttpStatus;
 
@@ -30,7 +31,6 @@ function logout(req, res) {
   req.logout();
   return res.end();
 }
-
 
 module.exports = {
   register,

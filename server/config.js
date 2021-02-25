@@ -11,6 +11,6 @@ module.exports = {
   auth: {
     scheme: process.env.AUTH_JWT_SCHEME || 'JWT',
     secret: process.env.AUTH_JWT_SECRET,
-    saltRounds: parseInt(process.env.AUTH_SALT_ROUNDS, 10),
+    saltRounds: parseInt(process.env.AUTH_SALT_ROUNDS, 10)
   }
 };

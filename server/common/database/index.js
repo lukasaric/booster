@@ -70,7 +70,7 @@ function initialize() {
 }
 
 const models = {
-  User: defineModel(User),
+  User: defineModel(User)
 };
 
 forEach(models, model => {

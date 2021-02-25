@@ -10,7 +10,7 @@ router
 
 router
   .use(auth.authenticate('jwt'))
-  .post('/logout', ctrl.logout)
+  .post('/logout', ctrl.logout);
 
 module.exports = {
   path: '/users',
