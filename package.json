@@ -83,5 +83,10 @@
     "sequelize-cli": "^6.2.0",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.6.0"
+  },
+  "engines": {
+    "node": ">= 10.17.0",
+    "npm": ">= 6.11.0",
+    "postgres": ">= 9.4"
   }
 }
