@@ -8,11 +8,11 @@ const { User } = require('../common/database');
 
 const { CONFLICT, CREATED } = HttpStatus;
 
-const inputAttrs = ['email', 'firstName', 'lastName'];
+const inputAttrs = ['email', 'firstName', 'lastName', 'password'];
 
 async function register({ body }, res) {
   const where = { email: body.email };
-  const foundUser = User.findOne({ where });
+  const foundUser = await User.findOne({ where });
   if (foundUser) return createError(CONFLICT, 'User already exists!');
   const payload = { ...pick(body, inputAttrs), role: body.role || 'USER' };
   const user = await User.create(payload);

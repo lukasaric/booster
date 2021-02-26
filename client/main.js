@@ -1,3 +1,4 @@
+import './validation';
 import {
   setInteractionMode,
   ValidationObserver,

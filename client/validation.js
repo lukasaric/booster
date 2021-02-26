@@ -3,7 +3,7 @@ import { extend } from 'vee-validate';
 import forEach from 'lodash/forEach';
 import { messages } from 'vee-validate/dist/locale/en.json';
 import snakeCase from 'lodash/snakeCase';
-import userApi from '@/api/user';
+import userApi from '@/api/auth';
 
 const after = {
   params: ['after'],

@@ -26,9 +26,6 @@ const getColumns = ({ DATE, ENUM, INTEGER, STRING }) => ({
     type: ENUM(Object.values(Role)),
     allowNull: false
   },
-  token: {
-    type: STRING(500)
-  },
   firstName: {
     type: STRING,
     field: 'first_name'

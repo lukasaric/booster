@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { EventEmitter } from 'events';
 
-const baseURL = process.env.API_PATH || '/api/v1/';
+const baseURL = process.env.API_PATH || '/api';
 const authScheme = process.env.AUTH_JWT_SCHEME || 'JWT';
 
 const config = {

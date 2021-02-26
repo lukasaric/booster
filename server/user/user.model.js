@@ -1,5 +1,6 @@
 'use strict';
 
+const Audience = require('../common/auth/audience');
 const bcrypt = require('bcrypt');
 const compact = require('lodash/compact');
 const config = require('../config');
@@ -24,10 +25,6 @@ class User extends Model {
       password: {
         type: STRING,
         validate: { notEmpty: true, len: [5, 255] }
-      },
-      token: {
-        type: STRING,
-        validate: { notEmpty: true, len: [10, 500] }
       },
       role: {
         type: ENUM(Object.values(Role)),
@@ -102,6 +99,12 @@ class User extends Model {
   createToken(options = {}) {
     const payload = pick(this, ['id', 'email']);
     return jwt.sign(payload, config.auth.secret, options);
+  }
+
+  getTokenSecret(audience) {
+    const { secret } = config.auth.jwt;
+    if (audience === Audience.Scope.Access) return secret;
+    return [secret, this.password, this.createdAt.getTime()].join('');
   }
 }
 

@@ -50,7 +50,7 @@ const requiresAuth = route => route.matched.some(it => it.meta.auth);
 router.beforeEach((to, _from, next) => {
   const user = get(store.state, 'auth.user');
   if (requiresAuth(to) && !user) return next({ name: 'login' });
-  next();
+  return next();
 });
 
 export default router;

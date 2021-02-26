@@ -15,8 +15,21 @@
       novalidate>
       <validation-provider
         v-slot="{ errors }"
-        name="first name"
+        name="email"
         rules="required">
+        <v-text-field
+          v-model="user.email"
+          :error-messages="errors"
+          type="email"
+          name="email"
+          label="Email"
+          outlined
+          class="required mb-1" />
+      </validation-provider>
+      <validation-provider
+        v-slot="{ errors }"
+        name="first name"
+        rules="required|min:2|max:50">
         <v-text-field
           v-model="user.firstName"
           :error-messages="errors"
@@ -28,25 +41,12 @@
       <validation-provider
         v-slot="{ errors }"
         name="last name"
-        rules="required">
+        rules="required|min:2|max:50">
         <v-text-field
           v-model="user.lastName"
           :error-messages="errors"
           name="last name"
           label="Last Name"
-          outlined
-          class="required mb-1" />
-      </validation-provider>
-      <validation-provider
-        v-slot="{ errors }"
-        name="email"
-        rules="required">
-        <v-text-field
-          v-model="user.email"
-          :error-messages="errors"
-          type="email"
-          name="email"
-          label="Email"
           outlined
           class="required mb-1" />
       </validation-provider>
@@ -103,7 +103,7 @@ export default {
   methods: {
     submit() {
       return api.register(this.user)
-        .then(() => this.$router.push('/login'))
+        .then(() => this.$router.push({ name: 'login' }))
         .catch(() => (this.error = REGISTER_ERR_MESSAGE));
     }
   }
