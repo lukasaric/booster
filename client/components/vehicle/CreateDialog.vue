@@ -1,8 +1,11 @@
 <template>
   <v-dialog v-model="show" no-click-animation persistent width="500">
     <v-card>
-      <v-card-title class="mb-2">
-        Create vehicle
+      <v-card-title primary-title class="primary mb-6">
+        <v-avatar color="primary lighten-1" size="38" class="mr-3">
+          <v-icon color="secondary accent-1">mdi-plus</v-icon>
+        </v-avatar>
+        <div class="text-truncate white--text">Create vehicle</div>
       </v-card-title>
       <v-card-text>
         <validation-observer
@@ -20,8 +23,7 @@
               v-model="vehicle.make"
               :error-messages="errors"
               label="Vehicle brand"
-              outlined
-              class="mb-3" />
+              outlined />
           </validation-provider>
           <validation-provider
             v-slot="{ errors }"
@@ -32,8 +34,7 @@
               v-model="vehicle.model"
               :error-messages="errors"
               label="Vehicle model"
-              outlined
-              class="mb-3" />
+              outlined />
           </validation-provider>
           <validation-provider
             v-slot="{ errors }"
@@ -45,10 +46,9 @@
               :error-messages="errors"
               type="number"
               label="Vehicle year"
-              outlined
-              class="mb-3" />
+              outlined />
           </validation-provider>
-          <div class="d-flex justify-end mb-2">
+          <div class="d-flex justify-end">
             <v-btn @click="close" text>Cancel</v-btn>
             <v-btn type="submit" text>Save</v-btn>
           </div>

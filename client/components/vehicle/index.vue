@@ -17,9 +17,7 @@
         <v-btn @click="showDialog = true" text>
           <v-icon dense class="mr-1">mdi-plus</v-icon>Create Vehicle
         </v-btn>
-        <create-dialog
-          @created="fetch(defaultPage)"
-          :visible.sync="showDialog" />
+        <create-dialog @created="fetch(defaultPage)" :visible.sync="showDialog" />
       </v-col>
     </v-row>
     <div v-if="isLoading" class="d-flex justify-center mt-12">
@@ -34,7 +32,7 @@
       :hide-default-footer="totalItems < options.itemsPerPage">
       <template slot-scope="{ items }">
         <v-row>
-          <v-col v-for="item in items" :key="item.id" lg="3" sm="6">
+          <v-col v-for="item in items" :key="item.id" lg="3" md="4" sm="6">
             <v-card
               color="primary"
               min-height="200"
@@ -55,7 +53,7 @@
               </v-card-text>
               <v-card-actions class="justify-end">
                 <v-btn @click="removeOrRestore(item)" color="secondary" text>
-                  <v-icon class="mr-1">mdi-{{ getLabel(item) }}</v-icon>
+                  <v-icon class="mr-1">mdi-{{ getLabel(item) }}-outline</v-icon>
                   {{ getLabel(item) }}
                 </v-btn>
               </v-card-actions>
@@ -83,7 +81,7 @@ export default {
     showArchived: false,
     showDialog: false,
     isLoading: true,
-    options: { itemsPerPage: 30, ...defaultPage() }
+    options: { itemsPerPage: 8, ...defaultPage() }
   }),
   computed: { defaultPage },
   methods: {
@@ -101,7 +99,7 @@ export default {
         .then(() => this.fetch(defaultPage))
         .finally(() => (this.showArchived = false));
     },
-    getLabel: ({ deletedAt }) => deletedAt ? 'restore' : 'remove'
+    getLabel: ({ deletedAt }) => deletedAt ? 'restore' : 'delete'
   },
   watch: {
     options: 'fetch',
