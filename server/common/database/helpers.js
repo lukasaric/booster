@@ -1,20 +1,12 @@
 'use strict';
 
-const { Op, Sequelize } = require('sequelize');
-const has = require('lodash/has');
 const inRange = require('lodash/inRange');
-const last = require('lodash/last');
+const { Sequelize } = require('sequelize');
 
 const isFunction = arg => typeof arg === 'function';
 const notEmpty = input => input.length > 0;
 
-const sql = {
-  concat,
-  where
-};
-
 module.exports = {
-  sql,
   getValidator,
   wrapMethods
 };
@@ -29,19 +21,6 @@ function getValidator(Model, attribute) {
     return inRange(input.length, min, max) ||
       `"${attribute}" must be between ${min} and ${max} characters long`;
   };
-}
-
-function concat(...args) {
-  const options = has(last(args), 'separator') ? args.pop() : {};
-  if (!options.separator) return Sequelize.fn('concat', ...args);
-  return Sequelize.fn('concat_ws', options.separator, ...args);
-}
-
-// NOTE: Fixes https://github.com/sequelize/sequelize/issues/6440
-function where(attribute, logic, options = {}) {
-  const { comparator = '=', scope = false } = options;
-  const where = Sequelize.where(attribute, comparator, logic);
-  return !scope ? where : { [Op.and]: [where] };
 }
 
 function wrapMethods(Model, Promise) {
