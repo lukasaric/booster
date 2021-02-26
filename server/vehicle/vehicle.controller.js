@@ -10,7 +10,7 @@ const { Op } = Sequelize;
 
 const inputAttrs = ['id', 'make', 'model', 'year'];
 
-const createFilter = q => map(['make', 'year', 'model'],
+const createFilter = q => map(['make', 'model'],
   it => ({ [it]: { [Op.iLike]: `%${q}%` } }));
 
 async function list({ query, options }, res) {

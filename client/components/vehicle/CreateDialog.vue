@@ -29,7 +29,7 @@
             rules="required|min:2|max:50"
             outlined>
             <v-text-field
-              v-model="vehicle.make"
+              v-model="vehicle.model"
               :error-messages="errors"
               label="Vehicle model"
               outlined
@@ -41,7 +41,7 @@
             rules="required"
             outlined>
             <v-text-field
-              v-model="vehicle.make"
+              v-model="vehicle.year"
               :error-messages="errors"
               type="number"
               label="Vehicle year"
