@@ -2,7 +2,7 @@
   <v-app-bar color="primary" app dark>
     <v-toolbar-title>
       <router-link :to="{ name: 'vehicles' }" class="d-flex align-center">
-        <v-icon size="24" class="mr-1">mdi-car-outline</v-icon>
+        <v-icon size="24" color="secondary" class="mr-2">mdi-car-outline</v-icon>
         <span class="white--text">Booster</span>
         <v-divider vertical class="mx-2" />
         <span class="subtitle mt-1">Vehicle System Management</span>
