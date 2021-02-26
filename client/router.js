@@ -1,12 +1,10 @@
 
 import Auth from '@/components/auth';
-import ForgotPassword from '@/components/auth/ForgotPassword';
 import get from 'lodash/get';
 import Home from '@/components';
 import Login from '@/components/auth/Login';
 import NotFound from '@/components/common/NotFound';
 import Register from '@/components/auth/Register';
-import ResetPassword from '@/components/auth/ResetPassword';
 import Router from 'vue-router';
 import store from './store';
 import Vehicle from '@/components/vehicle';
@@ -30,14 +28,6 @@ const router = new Router({
       path: 'register',
       name: 'register',
       component: Register
-    }, {
-      path: 'forgot-password',
-      name: 'forgot-password',
-      component: ForgotPassword
-    }, {
-      path: 'reset-password/:token',
-      name: 'reset-password',
-      component: ResetPassword
     }]
   }, {
     path: '/',

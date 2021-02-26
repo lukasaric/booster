@@ -1,4 +1,5 @@
 import 'vuetify/dist/vuetify.min.css';
+import colors from 'vuetify/es5/util/colors';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 
@@ -9,8 +10,8 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: '#37474f',
-        secondary: '#ffb300'
+        primary: colors.blueGrey.darken4,
+        secondary: colors.amber
       }
     }
   }

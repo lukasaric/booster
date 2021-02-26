@@ -6,9 +6,7 @@ const urls = {
   root: '/users',
   login: () => path.join(urls.root, 'login'),
   register: () => path.join(urls.root, 'register'),
-  logout: () => path.join(urls.root, 'logout'),
-  forgotPassword: () => path.join(urls.root, 'forgotPassword'),
-  resetPassword: () => path.join(urls.root, 'resetPassword')
+  logout: () => path.join(urls.root, 'logout')
 };
 
 function login(credentials) {
@@ -20,10 +18,9 @@ function login(credentials) {
     });
 }
 
-function logout() {
-  request.post(urls.logout()).then(() => {
-    request.auth.token = null;
-  });
+async function logout() {
+  await request.post(urls.logout());
+  request.auth.token = null;
 }
 
 function register(payload) {

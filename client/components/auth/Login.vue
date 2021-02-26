@@ -57,9 +57,6 @@
         <router-link :to="{ name: 'register' }">
           You don't have account?
         </router-link>
-        <router-link :to="{ name: 'forgot-password' }">
-          Forgot password?
-        </router-link>
       </div>
     </validation-observer>
   </div>
@@ -93,7 +90,7 @@ export default {
 <style lang="scss" scoped>
 .options {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   padding: 0.875rem 0 0.25rem;
   text-align: right;

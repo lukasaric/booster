@@ -17,7 +17,9 @@
         <v-btn @click="showDialog = true" text>
           <v-icon dense class="mr-1">mdi-plus</v-icon>Create Vehicle
         </v-btn>
-        <create-dialog @created="fetch(defaultPage)" :visible.sync="showDialog" />
+        <create-dialog
+          @created="fetch(defaultPage)"
+          :visible.sync="showDialog" />
       </v-col>
     </v-row>
     <div v-if="isLoading" class="d-flex justify-center mt-12">
@@ -34,7 +36,7 @@
         <v-row>
           <v-col v-for="item in items" :key="item.id" lg="3" md="4" sm="6">
             <v-card
-              color="primary"
+              color="blue-grey darken-3"
               min-height="200"
               dark
               class="d-flex flex-column justify-space-between">
@@ -53,7 +55,7 @@
               </v-card-text>
               <v-card-actions class="justify-end">
                 <v-btn @click="removeOrRestore(item)" color="secondary" text>
-                  <v-icon class="mr-1">mdi-{{ getLabel(item) }}-outline</v-icon>
+                  <v-icon class="mr-1">mdi-{{ getLabel(item) }}</v-icon>
                   {{ getLabel(item) }}
                 </v-btn>
               </v-card-actions>
@@ -81,7 +83,7 @@ export default {
     showArchived: false,
     showDialog: false,
     isLoading: true,
-    options: { itemsPerPage: 8, ...defaultPage() }
+    options: { itemsPerPage: 30, ...defaultPage() }
   }),
   computed: { defaultPage },
   methods: {

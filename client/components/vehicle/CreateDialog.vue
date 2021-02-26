@@ -86,9 +86,9 @@ export default {
       this.vehicle = getDefaultData();
       this.$emit('update:visible', false);
     },
-    save() {
-      return api.create(this.vehicle)
-        .then(() => this.close());
+    async save() {
+      await api.create(this.vehicle);
+      this.close();
     }
   },
   watch: {
