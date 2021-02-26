@@ -8,7 +8,7 @@ const pick = require('lodash/pick');
 
 const { Op } = Sequelize;
 
-const inputAttrs = ['make', 'model', 'year'];
+const inputAttrs = ['id', 'make', 'model', 'year'];
 
 const createFilter = q => map(['make', 'year', 'model'],
   it => ({ [it]: { [Op.iLike]: `%${q}%` } }));

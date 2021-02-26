@@ -1,9 +1,103 @@
 <template>
-  <h1>Vehicle List</h1>
+  <v-container fluid class="pa-8">
+    <v-row class="toolbar">
+      <v-col lg="4" md="6">
+        <v-text-field
+          v-model="filter"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line hide-details clearable />
+        <v-checkbox
+          v-model="showArchived"
+          label="Show archived"
+          hide-details
+          class="my-2 archived-checkbox" />
+      </v-col>
+      <v-col lg="8" md="6" class="d-flex justify-end">
+        <v-btn @click="showDialog = true" text>
+          <v-icon dense class="mr-1">mdi-plus</v-icon>Create Vehicle
+        </v-btn>
+        <create-dialog
+          @created="fetch(defaultPage)"
+          :visible.sync="showDialog" />
+      </v-col>
+    </v-row>
+    <v-data-iterator
+      :items="vehicles"
+      :options.sync="options"
+      :footer-props="{ itemsPerPageOptions: [30, 60, 90, -1] }"
+      :server-items-length="totalItems"
+      :hide-default-footer="totalItems < options.itemsPerPage">
+      <template slot-scope="{ items }">
+        <v-row>
+          <v-col v-for="item in items" :key="item.id" lg="3" sm="6">
+            <v-card
+              color="primary"
+              min-height="200"
+              dark
+              class="d-flex flex-column justify-space-between">
+              <v-card-title class="text-h5 grey--text text--lighten-3">
+                {{ item.make }}
+              </v-card-title>
+              <v-card-text>
+                {{ item.model }}
+                <v-divider vertical />
+                {{ item.year }}
+              </v-card-text>
+              <v-card-actions class="justify-end">
+                <v-btn @click="removeOrRestore(item)" color="secondary" text>
+                  <v-icon class="mr-1">mdi-{{ getLabel(item) }}</v-icon>
+                  {{ getLabel(item) }}
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-col>
+        </v-row>
+      </template>
+    </v-data-iterator>
+  </v-container>
 </template>
 
 <script>
+import api from '@/api/vehicle';
+import CreateDialog from './CreateDialog';
+import throttle from 'lodash/throttle';
+
+const defaultPage = () => ({ sortBy: ['updatedAt'], sortDesc: [true], page: 1 });
+
 export default {
-  name: 'vehicle-list'
+  name: 'vehicle-list',
+  data: () => ({
+    vehicles: [],
+    filter: null,
+    totalItems: 0,
+    showArchived: false,
+    showDialog: false,
+    options: { itemsPerPage: 30, ...defaultPage() }
+  }),
+  computed: { defaultPage },
+  methods: {
+    fetch: throttle(async function (opts) {
+      Object.assign(this.options, opts);
+      const params = { filter: this.filter, archived: this.showArchived };
+      const { items, total } = await api.fetch({ ...this.options, params });
+      this.vehicles = items;
+      this.totalItems = total;
+    }, 400),
+    removeOrRestore(vehicle) {
+      const { deletedAt } = vehicle;
+      const action = deletedAt ? 'create' : 'remove';
+      return api[action](vehicle)
+        .then(() => this.fetch(defaultPage))
+        .finally(() => (this.showArchived = false));
+    },
+    getLabel: ({ deletedAt }) => deletedAt ? 'restore' : 'remove'
+  },
+  watch: {
+    options: 'fetch',
+    filter: 'fetch',
+    showArchived: 'fetch'
+  },
+  components: { CreateDialog }
 };
 </script>
