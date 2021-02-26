@@ -1,40 +1,31 @@
 'use strict';
 
-const { Role } = require('../../../../common/config');
-
-const TABLE_NAME = 'user';
+const TABLE_NAME = 'vehicle';
 
 module.exports = {
   up: (qi, Sequelize) => qi.createTable(TABLE_NAME, getColumns(Sequelize)),
   down: qi => qi.dropTable(TABLE_NAME)
 };
 
-const getColumns = ({ DATE, ENUM, INTEGER, STRING }) => ({
+const getColumns = ({ DATE, INTEGER, STRING }) => ({
   id: {
     type: INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false
   },
-  email: {
+  oid: {
     type: STRING,
-    allowNull: false,
     unique: true
   },
-  password: {
+  make: {
     type: STRING
   },
-  role: {
-    type: ENUM(Object.values(Role)),
-    allowNull: false
+  model: {
+    type: STRING
   },
-  firstName: {
-    type: STRING,
-    field: 'first_name'
-  },
-  lastName: {
-    type: STRING,
-    field: 'last_name'
+  year: {
+    type: INTEGER
   },
   createdAt: {
     type: DATE,

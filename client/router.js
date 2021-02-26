@@ -9,6 +9,7 @@ import Register from '@/components/auth/Register';
 import ResetPassword from '@/components/auth/ResetPassword';
 import Router from 'vue-router';
 import store from './store';
+import Vehicle from '@/components/vehicle';
 import Vue from 'vue';
 
 Vue.use(Router);
@@ -41,7 +42,12 @@ const router = new Router({
   }, {
     path: '/',
     component: Home,
-    meta: { auth: true }
+    meta: { auth: true },
+    children: [{
+      path: '',
+      name: 'vehicles',
+      component: Vehicle
+    }]
   }, fallbackRoute]
 });
 

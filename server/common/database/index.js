@@ -17,6 +17,7 @@ const logger = require('../logger')('db');
 // Require models.
 /* eslint-disable require-sort/require-sort */
 const User = require('../../user/user.model');
+const Vehicle = require('../../vehicle/vehicle.model');
 /* eslint-enable require-sort/require-sort */
 
 const isProduction = process.env.NODE_ENV === 'production';
@@ -70,7 +71,8 @@ function initialize() {
 }
 
 const models = {
-  User: defineModel(User)
+  User: defineModel(User),
+  Vehicle: defineModel(Vehicle)
 };
 
 forEach(models, model => {

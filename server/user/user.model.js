@@ -10,7 +10,8 @@ const pick = require('lodash/pick');
 const { Role } = require('../../common/config');
 
 const PROFILE_ATTRS = [
-  'id', 'role', 'email', 'firstName', 'lastName', 'fullName', 'createdAt', 'deletedAt'
+  'id', 'role', 'email', 'firstName',
+  'lastName', 'fullName', 'createdAt', 'deletedAt'
 ];
 
 class User extends Model {
@@ -64,10 +65,6 @@ class User extends Model {
         }
       }
     };
-  }
-
-  static associate() {
-
   }
 
   static options() {
