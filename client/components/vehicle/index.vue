@@ -72,7 +72,9 @@ import api from '@/api/vehicle';
 import CreateDialog from './CreateDialog';
 import throttle from 'lodash/throttle';
 
-const defaultPage = () => ({ sortBy: ['make'], sortDesc: [false], page: 1 });
+const defaultPage = ({ sortBy = 'make' } = {}) => ({
+  sortBy: [sortBy], sortDesc: [false], page: 1
+});
 
 export default {
   name: 'vehicle-list',
@@ -106,7 +108,9 @@ export default {
   watch: {
     options: 'fetch',
     filter: 'fetch',
-    showArchived: 'fetch'
+    showArchived() {
+      this.fetch(defaultPage({ sortBy: 'deletedAt' }));
+    }
   },
   async created() {
     await this.fetch(this.defaultPage);
