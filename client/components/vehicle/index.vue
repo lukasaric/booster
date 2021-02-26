@@ -22,7 +22,11 @@
           :visible.sync="showDialog" />
       </v-col>
     </v-row>
+    <div v-if="isLoading" class="d-flex justify-center mt-12">
+      <v-progress-circular size="50" indeterminate />
+    </div>
     <v-data-iterator
+      v-else
       :items="vehicles"
       :options.sync="options"
       :footer-props="{ itemsPerPageOptions: [30, 60, 90, -1] }"
@@ -40,9 +44,14 @@
                 {{ item.make }}
               </v-card-title>
               <v-card-text>
-                {{ item.model }}
-                <v-divider vertical />
-                {{ item.year }}
+                <p>
+                  <b>Model:</b>
+                  {{ item.model }}
+                </p>
+                <p>
+                  <b>Year:</b>
+                  {{ item.year }}
+                </p>
               </v-card-text>
               <v-card-actions class="justify-end">
                 <v-btn @click="removeOrRestore(item)" color="secondary" text>
@@ -63,7 +72,7 @@ import api from '@/api/vehicle';
 import CreateDialog from './CreateDialog';
 import throttle from 'lodash/throttle';
 
-const defaultPage = () => ({ sortBy: ['updatedAt'], sortDesc: [true], page: 1 });
+const defaultPage = () => ({ sortBy: ['make'], sortDesc: [false], page: 1 });
 
 export default {
   name: 'vehicle-list',
@@ -73,6 +82,7 @@ export default {
     totalItems: 0,
     showArchived: false,
     showDialog: false,
+    isLoading: true,
     options: { itemsPerPage: 30, ...defaultPage() }
   }),
   computed: { defaultPage },
@@ -98,6 +108,35 @@ export default {
     filter: 'fetch',
     showArchived: 'fetch'
   },
+  async created() {
+    await this.fetch(this.defaultPage);
+    this.isLoading = false;
+  },
   components: { CreateDialog }
 };
 </script>
+
+<style lang="scss" scoped>
+::v-deep .archived-checkbox {
+  &.v-input--checkbox {
+    justify-content: flex-end;
+  }
+
+  .v-input__slot {
+    flex-direction: row-reverse;
+
+    .v-input--selection-controls__input {
+      justify-content: center;
+      margin-right: 0;
+    }
+
+    .v-icon {
+      font-size: 1.125rem;
+    }
+
+    label {
+      font-size: 0.875rem;
+    }
+  }
+}
+</style>

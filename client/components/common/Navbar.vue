@@ -1,7 +1,7 @@
 <template>
   <v-app-bar color="primary" app dark>
     <v-toolbar-title>
-      <router-link :to="{ name: 'home' }" class="d-flex align-center">
+      <router-link :to="{ name: 'vehicles' }" class="d-flex align-center">
         <v-icon size="24" class="mr-1">mdi-car-outline</v-icon>
         <span class="white--text">Booster</span>
         <v-divider vertical class="mx-2" />
@@ -9,7 +9,7 @@
       </router-link>
     </v-toolbar-title>
     <v-spacer />
-    <v-menu>
+    <v-menu offset-y>
       <template v-slot:activator="{ on }">
         <div v-on="on" class="dropdown-activator">
           <v-icon size="24" class="mr-1">mdi-account-circle</v-icon>
