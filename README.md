@@ -25,6 +25,7 @@ Check `engines` field in [`package.json`](package.json)
 - App is configured via environment variables contained in a file named `.env`.
   Use the `.env.example` file as a template: `cp .env.example .env` and enter configuration details.
 - Run `npm run db:seed` to load vehicle dataset from `vehicle.json` file, if any error run `npm run db:reset` and then `npm run db:seed`.
+- Set `DATABASE_EXTENSION=fuzzystrmatch` in `.env` to enable fuzzy search (levenshtein approach)
 - You can create admin/learner user by running `npm run user:add`
 - For other scripts run `npm run`
 
