@@ -63,7 +63,7 @@
       </validation-provider>
       <validation-provider
         v-slot="{ errors }"
-        name="password confirmation"
+        name="Password confirmation"
         :rules="{ required: true, is: user.password }">
         <v-text-field
           v-model="user.passwordConfirmation"
@@ -74,9 +74,16 @@
       </validation-provider>
       <div class="d-flex justify-end mt-1">
         <v-btn
+          :to="{ name: 'login' }"
+          color="blue-grey"
+          dark rounded depressed
+          class="white--text mr-2">
+          Back
+        </v-btn>
+        <v-btn
           type="submit"
           color="primary"
-          block dark rounded depressed>
+          dark rounded depressed>
           Sign up
         </v-btn>
       </div>
@@ -109,3 +116,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.v-btn.theme--dark.v-size--default {
+  min-width: 7rem;
+}
+</style>
