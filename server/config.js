@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   hostname: process.env.HOSTNAME,
-  port: process.env.PORT,
+  port: process.env.SERVER_PORT,
   ip: process.env.IP,
   apiPath: process.env.API_PATH || '/api',
   staticFolder: path.resolve(__dirname, '../dist'),

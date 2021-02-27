@@ -8,6 +8,14 @@
         <div class="text-truncate white--text">Create vehicle</div>
       </v-card-title>
       <v-card-text>
+        <v-alert
+          :value="!!error"
+          color="pink lighten-1"
+          transition="fade-transition"
+          dismissible text dense
+          class="mb-7 text-left">
+          {{ error }}
+        </v-alert>
         <validation-observer
           v-if="visible"
           ref="form"
@@ -28,7 +36,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="model"
-            :rules="{ required: true, min: 2, max: 50, unique_vehicle: vehicle.model }"
+            :rules="{ required: true, min: 2, max: 50 }"
             outlined>
             <v-text-field
               v-model="vehicle.model"
@@ -72,7 +80,7 @@ export default {
   props: {
     visible: { type: Boolean, default: false }
   },
-  data: () => ({ vehicle: getDefaultData() }),
+  data: () => ({ vehicle: getDefaultData(), error: null }),
   computed: {
     show: {
       get: vm => vm.visible,
@@ -83,12 +91,13 @@ export default {
   },
   methods: {
     close() {
-      this.vehicle = getDefaultData();
+      Object.assign(this, { vehicle: getDefaultData(), error: null });
       this.$emit('update:visible', false);
     },
     async save() {
-      await api.create(this.vehicle);
-      this.close();
+      return api.create(this.vehicle)
+        .then(() => this.close())
+        .catch(err => Object.assign(this, { error: err }));
     }
   },
   watch: {

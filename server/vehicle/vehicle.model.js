@@ -1,7 +1,6 @@
 'use strict';
 
 const { Model } = require('sequelize');
-const { restoreOrCreate } = require('../common/database/restore');
 
 class Vehicle extends Model {
   static fields({ DATE, INTEGER, STRING }) {
@@ -44,8 +43,14 @@ class Vehicle extends Model {
     };
   }
 
-  static async restoreOrCreate(vehicle, options) {
-    return restoreOrCreate(this, vehicle, options);
+  static async restoreOrCreate({ id, ...payload }) {
+    if (id) {
+      const vehicle = await Vehicle.findByPk(id, { paranoid: false });
+      if (vehicle.deletedAt) vehicle.setDataValue('deletedAt', null);
+      return vehicle.save();
+    }
+    const found = await Vehicle.findOne({ where: payload });
+    return found || Vehicle.create(payload);
   }
 }
 

@@ -24,8 +24,8 @@ async function list({ query, options }, res) {
 
 async function create({ body }, res) {
   const payload = pick(body, inputAttrs);
-  const [err, vehicle] = await Vehicle.restoreOrCreate(payload);
-  if (err) return createError(CONFLICT, 'Vehicle exists!');
+  const vehicle = await Vehicle.restoreOrCreate(payload);
+  if (vehicle) return createError(CONFLICT, 'Vehicle exists!');
   return res.jsend.success(vehicle);
 }
 
