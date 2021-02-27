@@ -1,5 +1,6 @@
 'use strict';
 
+require('express-async-errors');
 const auth = require('./common/auth').authenticate('jwt');
 const express = require('express');
 const get = require('lodash/get');

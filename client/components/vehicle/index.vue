@@ -2,11 +2,12 @@
   <v-container fluid class="pa-8">
     <v-row class="toolbar">
       <v-col lg="4" md="6">
-        <v-text-field
+        <vehicle-select
           v-model="filter"
+          :params="{ limit: 5 }"
           append-icon="mdi-magnify"
-          label="Search"
-          single-line hide-details clearable />
+          single-line hide-details clearable
+          class="mb-1" />
         <v-checkbox
           v-model="showArchived"
           label="Show archived"
@@ -71,6 +72,7 @@
 import api from '@/api/vehicle';
 import CreateDialog from './CreateDialog';
 import throttle from 'lodash/throttle';
+import VehicleSelect from '@/components/common/VehicleSelect';
 
 const defaultPage = ({ sortBy = 'make' } = {}) => ({
   sortBy: [sortBy], sortDesc: [false], page: 1
@@ -116,7 +118,7 @@ export default {
     await this.fetch(this.defaultPage);
     this.isLoading = false;
   },
-  components: { CreateDialog }
+  components: { CreateDialog, VehicleSelect }
 };
 </script>
 

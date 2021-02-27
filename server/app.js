@@ -16,9 +16,6 @@ const nocache = require('nocache');
 const router = require('./router');
 const logger = require('./common/logger')();
 
-// eslint-disable-next-line require-sort/require-sort
-require('express-async-errors');
-
 const app = express();
 app.use(helmet());
 app.use(cors());

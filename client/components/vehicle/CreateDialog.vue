@@ -36,7 +36,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="model"
-            :rules="{ required: true, min: 2, max: 50 }"
+            rules="required|min:2|max:50"
             outlined>
             <v-text-field
               v-model="vehicle.model"
@@ -97,7 +97,7 @@ export default {
     async save() {
       return api.create(this.vehicle)
         .then(() => this.close())
-        .catch(err => Object.assign(this, { error: err }));
+        .catch(err => err && Object.assign(this, { error: 'Vehicle already exists!' }));
     }
   },
   watch: {
