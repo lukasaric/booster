@@ -20,7 +20,9 @@ const User = require('../../user/user.model');
 const Vehicle = require('../../vehicle/vehicle.model');
 /* eslint-enable require-sort/require-sort */
 
-const isProduction = process.env.NODE_ENV === 'production';
+const { DATABASE_EXTENSION, NODE_ENV } = process.env;
+
+const isProduction = NODE_ENV === 'production';
 const sequelize = createConnection(config);
 const { Sequelize: { DataTypes } } = sequelize;
 
@@ -62,6 +64,7 @@ function initialize() {
     .then(() => logger.info(getConfig(sequelize), '🗄️  Connected to database'))
     .then(() => checkPostgreVersion(sequelize))
     .then(() => !isProduction && umzug.up())
+    .then(() => processPostgreExtensions(sequelize))
     .then(() => umzug.executed())
     .then(migrations => {
       const files = migrations.map(it => it.file);
@@ -125,6 +128,13 @@ function checkPostgreVersion(sequelize) {
       logger.error({ version, required: range }, err.message);
       return Promise.reject(err);
     });
+}
+
+async function processPostgreExtensions(sequelize) {
+  const [extensions] = await sequelize.query('SELECT * FROM pg_extension', { raw: true });
+  const isExtensionInstalled = extensions.some(it => it.extname === DATABASE_EXTENSION);
+  if (isExtensionInstalled) return;
+  return sequelize.query(`CREATE EXTENSION ${DATABASE_EXTENSION};`);
 }
 
 function addScopes(Model, models) {
