@@ -5,9 +5,7 @@ export const login = async ({ commit }, credentials) => {
   return commit('login', user) || user;
 };
 
-export const logout = () => {
-  return auth.logout();
-};
+export const logout = () => auth.logout();
 
 export const forgotPassword = (_ctx, { email }) => {
   return auth.forgotPassword(email);

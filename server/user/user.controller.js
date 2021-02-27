@@ -34,8 +34,7 @@ function login({ user }, res) {
   res.jsend.success({ token, user: user.profile });
 }
 
-function logout(req, res) {
-  req.logout();
+function logout(_, res) {
   return res.end();
 }
 
