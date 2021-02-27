@@ -6,6 +6,7 @@
     :items="items"
     :search-input.sync="search"
     :no-data-text="noDataLabel"
+    placeholder="Search by brand"
     return-object no-filter>
     <template #selection="{ item }">
       {{ item.make }}
