@@ -3,7 +3,7 @@
     <v-row class="toolbar">
       <v-col lg="4" md="6">
         <vehicle-select
-          v-model="filter"
+          v-model="fuzzyResult"
           :params="{ limit: 5 }"
           append-icon="mdi-magnify"
           single-line hide-details clearable
@@ -82,7 +82,7 @@ export default {
   name: 'vehicle-list',
   data: () => ({
     vehicles: [],
-    filter: null,
+    fuzzyResult: null,
     totalItems: 0,
     showArchived: false,
     showDialog: false,
@@ -93,7 +93,7 @@ export default {
   methods: {
     fetch: throttle(async function (opts) {
       Object.assign(this.options, opts);
-      const params = { filter: this.filter, archived: this.showArchived };
+      const params = { fuzzyResult: this.fuzzyResult, archived: this.showArchived };
       const { items, total } = await api.fetch({ ...this.options, params });
       this.vehicles = items;
       this.totalItems = total;
@@ -109,7 +109,7 @@ export default {
   },
   watch: {
     options: 'fetch',
-    filter: 'fetch',
+    fuzzyResult: 'fetch',
     showArchived() {
       this.fetch(defaultPage({ sortBy: 'deletedAt' }));
     }
