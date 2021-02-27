@@ -12,7 +12,7 @@ const inputAttrs = ['id', 'make', 'model', 'year'];
 function createFuzzySearch(where, options, search) {
   search = search.toUpperCase();
   const make = Sequelize.where(fn('levenshtein', col('make'), search), '<=', 5);
-  const order = [literal([`levenshtein('${search.toUpperCase()}', make)`])];
+  const order = [literal([`levenshtein('${search}', make)`])];
   where[Op.and].push(make);
   options.order = order;
 }

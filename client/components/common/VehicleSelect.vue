@@ -9,10 +9,10 @@
     placeholder="Search by brand"
     return-object no-filter>
     <template #selection="{ item }">
-      {{ item.make }}
+      {{ item.make }} ({{ item.model }})
     </template>
     <template #item="{ item }">
-      {{ item.make }}
+      {{ item.make }} ({{ item.model }})
     </template>
   </v-autocomplete>
 </template>
