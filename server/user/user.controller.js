@@ -10,6 +10,13 @@ const { CONFLICT, CREATED } = HttpStatus;
 
 const inputAttrs = ['email', 'firstName', 'lastName', 'password'];
 
+async function list({ query: { email }, options }, res) {
+  const where = {};
+  if (email) where.email = email;
+  const { count } = await User.findAndCountAll({ where, ...options });
+  return res.jsend.success({ total: count });
+}
+
 async function register({ body }, res) {
   const where = { email: body.email };
   const foundUser = await User.findOne({ where });
@@ -33,6 +40,7 @@ function logout(req, res) {
 }
 
 module.exports = {
+  list,
   register,
   login,
   logout

@@ -14,9 +14,10 @@ const createFilter = q => map(['make', 'model'],
   it => ({ [it]: { [Op.iLike]: `%${q}%` } }));
 
 async function list({ query, options }, res) {
-  const { filter } = query;
+  const { filter, model } = query;
   const where = { [Op.and]: [] };
   if (filter) where[Op.or] = createFilter(filter);
+  if (model) where[Op.and].push({ model });
   const { rows, count } = await Vehicle.findAndCountAll({ ...options, where });
   return res.jsend.success({ items: rows, total: count });
 }

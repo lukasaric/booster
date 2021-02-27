@@ -1,4 +1,4 @@
-import { extractData } from './helpers';
+import { extractData } from '@/api/helpers';
 import path from 'path';
 import request from './request';
 
@@ -8,6 +8,11 @@ const urls = {
   register: () => path.join(urls.root, 'register'),
   logout: () => path.join(urls.root, 'logout')
 };
+
+function fetch(params = {}) {
+  return request.get(urls.root, params)
+    .then(extractData);
+}
 
 function login(credentials) {
   return request.base.post(urls.login(), credentials)
@@ -36,6 +41,7 @@ function resetPassword(body) {
 }
 
 export default {
+  fetch,
   login,
   register,
   logout,

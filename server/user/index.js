@@ -8,7 +8,8 @@ router
   .post('/register', ctrl.register)
   .post('/login', auth.authenticate('local'), ctrl.login)
   .use(auth.authenticate('jwt'))
-  .post('/logout', ctrl.logout);
+  .post('/logout', ctrl.logout)
+  .get('/', ctrl.list);
 
 module.exports = {
   path: '/users',

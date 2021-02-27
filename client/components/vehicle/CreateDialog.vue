@@ -28,7 +28,7 @@
           <validation-provider
             v-slot="{ errors }"
             name="model"
-            rules="required|min:2|max:50"
+            :rules="{ required: true, min: 2, max: 50, unique_vehicle: vehicle.model }"
             outlined>
             <v-text-field
               v-model="vehicle.model"

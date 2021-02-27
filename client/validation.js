@@ -4,6 +4,7 @@ import forEach from 'lodash/forEach';
 import { messages } from 'vee-validate/dist/locale/en.json';
 import snakeCase from 'lodash/snakeCase';
 import userApi from '@/api/auth';
+import vehicleApi from '@/api/vehicle';
 
 const after = {
   params: ['after'],
@@ -17,10 +18,17 @@ const alphanumerical = {
 };
 
 const uniqueEmail = {
-  params: ['userData'],
-  validate: (email, { userData }) => {
-    if (userData && email === userData.email) return true;
+  params: ['email'],
+  validate: (_, { email }) => {
     return userApi.fetch({ params: { email } }).then(({ total }) => !total);
+  },
+  message: 'The {_field_} is not unique.'
+};
+
+const uniqueVehicle = {
+  params: ['model'],
+  validate: (_, { model }) => {
+    return vehicleApi.fetch({ params: { model } }).then(({ total }) => !total);
   },
   message: 'The {_field_} is not unique.'
 };
@@ -35,7 +43,8 @@ const rules = {
   min,
   mimes,
   required,
-  uniqueEmail
+  uniqueEmail,
+  uniqueVehicle
 };
 
 forEach(rules, (rule, name) => extend(snakeCase(name), {
