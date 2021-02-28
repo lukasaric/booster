@@ -28,8 +28,8 @@ async function list({ query, options }, res) {
 
 async function create({ body }, res) {
   const payload = pick(body, inputAttrs);
-  const vehicle = await Vehicle.restoreOrCreate(payload);
-  if (vehicle) return createError(CONFLICT, 'Vehicle already exists!');
+  const [err, vehicle] = await Vehicle.restoreOrCreate(payload);
+  if (err) return createError(CONFLICT, 'Vehicle already exists!');
   return res.jsend.success(vehicle);
 }
 

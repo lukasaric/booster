@@ -6,10 +6,10 @@ const router = require('express').Router();
 
 router
   .post('/register', ctrl.register)
+  .get('/', ctrl.count)
   .post('/login', auth.authenticate('local'), ctrl.login)
   .use(auth.authenticate('jwt'))
-  .post('/logout', ctrl.logout)
-  .get('/', ctrl.list);
+  .post('/logout', ctrl.logout);
 
 module.exports = {
   path: '/users',

@@ -4,15 +4,8 @@ import request from './request';
 
 const urls = {
   root: '/users',
-  login: () => path.join(urls.root, 'login'),
-  register: () => path.join(urls.root, 'register'),
-  logout: () => path.join(urls.root, 'logout')
+  login: () => path.join(urls.root, 'login')
 };
-
-function fetch(params = {}) {
-  return request.get(urls.root, params)
-    .then(extractData);
-}
 
 function login(credentials) {
   return request.base.post(urls.login(), credentials)
@@ -32,19 +25,14 @@ function register(payload) {
   return request.post(urls.register(), payload);
 }
 
-function forgotPassword(email) {
-  return request.post(urls.forgotPassword(), { email });
-}
-
-function resetPassword(body) {
-  return request.post(urls.resetPassword(), body);
+function count(params = {}) {
+  return request.get(urls.root, params)
+    .then(extractData);
 }
 
 export default {
-  fetch,
   login,
   register,
   logout,
-  forgotPassword,
-  resetPassword
+  count
 };

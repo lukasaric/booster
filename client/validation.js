@@ -19,7 +19,7 @@ const alphanumerical = {
 const uniqueEmail = {
   params: ['email'],
   validate: (_, { email }) => {
-    return userApi.fetch({ params: { email } }).then(({ total }) => !total);
+    return userApi.count({ params: { email } }).then(({ total }) => !total);
   },
   message: 'The {_field_} is not unique.'
 };

@@ -1,6 +1,9 @@
 'use strict';
 
 const { Model } = require('sequelize');
+const Promise = require('bluebird');
+
+const pTuple = fn => Promise.try(fn).then(result => [null, result], err => [err]);
 
 class Vehicle extends Model {
   static fields({ DATE, INTEGER, STRING }) {
@@ -32,7 +35,6 @@ class Vehicle extends Model {
   static options() {
     return {
       modelName: 'vehicle',
-      tableName: 'vehicle',
       timestamps: true,
       paranoid: true,
       freezeTableName: true
@@ -40,13 +42,16 @@ class Vehicle extends Model {
   }
 
   static async restoreOrCreate({ id, ...payload }) {
-    if (id) {
-      const vehicle = await Vehicle.findByPk(id, { paranoid: false });
-      if (vehicle.deletedAt) vehicle.setDataValue('deletedAt', null);
-      return vehicle.save();
-    }
-    const found = await Vehicle.findOne({ where: payload });
-    return found || Vehicle.create(payload);
+    return pTuple(async () => {
+      if (id) {
+        const vehicle = await Vehicle.findByPk(id, { paranoid: false });
+        if (vehicle.deletedAt) vehicle.setDataValue('deletedAt', null);
+        return vehicle.save();
+      }
+      const found = await Vehicle.findOne({ where: payload });
+      if (found) throw new Error('Vehicle already exists');
+      return Vehicle.create(payload);
+    });
   }
 }
 
