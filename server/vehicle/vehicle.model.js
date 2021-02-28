@@ -2,6 +2,7 @@
 
 const { Model } = require('sequelize');
 const Promise = require('bluebird');
+const { UniqueConstraintError } = require('sequelize');
 
 const pTuple = fn => Promise.try(fn).then(result => [null, result], err => [err]);
 
@@ -49,8 +50,9 @@ class Vehicle extends Model {
         return vehicle.save();
       }
       const found = await Vehicle.findOne({ where: payload });
-      if (found) throw new Error('Vehicle already exists');
-      return Vehicle.create(payload);
+      if (!found) return Vehicle.create(payload);
+      const message = 'Vehicle already exists';
+      throw new UniqueConstraintError({ message });
     });
   }
 }
