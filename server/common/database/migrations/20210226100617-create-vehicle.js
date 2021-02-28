@@ -14,10 +14,6 @@ const getColumns = ({ DATE, INTEGER, STRING }) => ({
     autoIncrement: true,
     allowNull: false
   },
-  oid: {
-    type: STRING,
-    unique: true
-  },
   make: {
     type: STRING
   },

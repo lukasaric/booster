@@ -13,10 +13,10 @@ module.exports.up = async qi => {
 
 module.exports.down = qi => qi.bulkDelete(TABLE_NAME, null, {});
 
-const processItems = items => items.map(({ _id, make, model, year }) => {
+const processItems = items => items.map(({ make, model, year }) => {
   const now = new Date();
   const dates = { created_at: now, updated_at: now };
-  return { oid: _id.$oid, make, model, year, ...dates };
+  return { make, model, year, ...dates };
 });
 
 function loadJson(path) {

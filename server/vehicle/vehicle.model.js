@@ -5,10 +5,6 @@ const { Model } = require('sequelize');
 class Vehicle extends Model {
   static fields({ DATE, INTEGER, STRING }) {
     return {
-      oid: {
-        type: STRING,
-        unique: true
-      },
       make: {
         type: STRING
       },
