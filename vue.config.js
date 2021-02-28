@@ -15,6 +15,12 @@ module.exports = {
       }
     }
   },
+  pluginOptions: {
+    envs: {
+      API_PATH: config.apiPath,
+      AUTH_JWT_SCHEME: config.auth.scheme
+    }
+  },
   chainWebpack: config => {
     config
       .entry('app')

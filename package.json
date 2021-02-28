@@ -10,7 +10,8 @@
     "db:reset": "npm run db drop && npm run db create && npm run db migrate",
     "db:seed": "npm run db seed:all",
     "db:migration:create": "npm run db migration:create -- --name placeholder",
-    "debug": "nodemon --inspect-brk -r dotenv/config ./server | bunyan"
+    "debug": "nodemon --inspect-brk -r dotenv/config ./server | bunyan",
+    "test:unit": "vue-cli-service test:unit"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,8 @@
   "homepage": "https://github.com/malizeus/booster#readme",
   "dependencies": {
     "@mdi/font": "^5.8.55",
+    "@vue/cli-plugin-unit-jest": "^4.5.11",
+    "@vue/test-utils": "^1.1.3",
     "axios": "^0.21.1",
     "bcrypt": "^5.0.0",
     "bluebird": "^3.7.2",
@@ -88,5 +91,10 @@
     "node": "12.x",
     "npm": ">= 6.11.0",
     "postgres": ">= 9.4"
+  },
+  "vuePlugins": {
+    "service": [
+      "./build/plugins/vue-cli/envs"
+    ]
   }
 }
