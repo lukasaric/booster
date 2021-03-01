@@ -22,3 +22,6 @@ stats.json
 
 # General
 .DS_Store
+
+# tests coverage
+coverage

@@ -69,6 +69,8 @@
 <script>
 import api from '@/api/vehicle';
 
+const UNIQUE_VEHICLE_ERROR = 'Vehicle already exists!';
+
 const getDefaultData = () => ({
   make: '',
   model: '',
@@ -97,7 +99,7 @@ export default {
     async save() {
       return api.create(this.vehicle)
         .then(() => this.close())
-        .catch(err => err && Object.assign(this, { error: 'Vehicle already exists!' }));
+        .catch(() => Object.assign(this, { error: UNIQUE_VEHICLE_ERROR }));
     }
   },
   watch: {

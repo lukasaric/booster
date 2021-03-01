@@ -46,12 +46,10 @@
               </v-card-title>
               <v-card-text>
                 <p>
-                  <b>Model:</b>
-                  {{ item.model }}
+                  <b>Model:</b>{{ item.model }}
                 </p>
                 <p>
-                  <b>Year:</b>
-                  {{ item.year }}
+                  <b>Year:</b>{{ item.year }}
                 </p>
               </v-card-text>
               <v-card-actions class="justify-end">
@@ -75,7 +73,7 @@ import throttle from 'lodash/throttle';
 import VehicleSelect from '@/components/common/VehicleSelect';
 
 const defaultPage = ({ sortBy = 'make' } = {}) => ({
-  sortBy: [sortBy], sortDesc: [false], page: 1
+  sortBy: sortBy, sortDesc: false, page: 1
 });
 
 export default {

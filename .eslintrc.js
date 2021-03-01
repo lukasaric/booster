@@ -3,17 +3,20 @@
 module.exports = {
   root: true,
   extends: '@extensionengine',
-  plugins: ['vuetify'],
-
-  rules: {
-    'vuetify/no-deprecated-classes': 'error'
-  },
-
+  plugins: ['vuetify', 'jest'],
+  rules: { 'vuetify/no-deprecated-classes': 'error' },
   overrides: [{
-    files: [
-      '**/__tests__/*.{j,t}s?(x)',
-      '**/tests/unit/**/*.spec.{j,t}s?(x)'
-    ],
+    files: ['extensions/**'],
+    parserOptions: {
+      parser: 'babel-eslint',
+      sourceType: 'module'
+    }
+  }, {
+    files: ['tests/**'],
+    parserOptions: {
+      parser: 'babel-eslint',
+      sourceType: 'module'
+    },
     env: { jest: true }
   }]
 };
