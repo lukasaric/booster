@@ -11,6 +11,7 @@
     "db:seed": "npm run db seed:all",
     "db:migration:create": "npm run db migration:create -- --name placeholder",
     "debug": "nodemon --inspect-brk -r dotenv/config ./server | bunyan",
+    "lint:js": "eslint --ext .js,.vue .",
     "test:unit": "vue-cli-service test:unit"
   },
   "repository": {

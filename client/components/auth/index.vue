@@ -22,6 +22,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  name: 'auth'
+};
+</script>
+
 <style lang="scss">
 .auth-container {
   height: 100%;
