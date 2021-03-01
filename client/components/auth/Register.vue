@@ -109,7 +109,6 @@ export default {
   data: () => ({ user: initUserPayload(), error: null }),
   methods: {
     submit() {
-      console.log('TRIGAA');
       return api.register(this.user)
         .then(() => this.$router.push({ name: 'login' }))
         .catch(() => (this.error = REGISTER_ERR_MESSAGE));

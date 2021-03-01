@@ -4,7 +4,8 @@ import request from './request';
 
 const urls = {
   root: '/users',
-  login: () => path.join(urls.root, 'login')
+  login: () => path.join(urls.root, 'login'),
+  register: () => path.join(urls.root, 'register')
 };
 
 function login(credentials) {
