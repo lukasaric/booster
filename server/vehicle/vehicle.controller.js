@@ -9,18 +9,17 @@ const { Op, fn, col, literal, cast } = Sequelize;
 
 const inputAttrs = ['id', 'make', 'model', 'year'];
 
+const processFuzzyOrder = search => ['make', 'model', 'year'].map(col => {
+  return literal([`levenshtein('${search}', cast(${col} as VARCHAR))`]);
+});
+
 function createFuzzySearch(where, options, search) {
   search = search.toUpperCase();
   const yearColumn = cast(col('year'), 'varchar');
   const concat = fn('concat', col('make'), col('model'), yearColumn);
   const whereCond = Sequelize.where(fn('levenshtein', concat, search), '<=', 10);
-  const order = [
-    literal([`levenshtein('${search}', make)`]),
-    literal([`levenshtein('${search}', model)`]),
-    literal([`levenshtein('${search}', cast(year as VARCHAR))`])
-  ];
   where[Op.and].push(whereCond);
-  options.order = order;
+  options.order = processFuzzyOrder(search);
 }
 
 async function list({ query, options }, res) {
