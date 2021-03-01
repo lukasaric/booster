@@ -3,7 +3,10 @@
 const TABLE_NAME = 'vehicle';
 
 module.exports = {
-  up: (qi, Sequelize) => qi.createTable(TABLE_NAME, getColumns(Sequelize)),
+  up: async (qi, Sequelize) => {
+    await qi.createTable(TABLE_NAME, getColumns(Sequelize));
+    return addConstraints(qi);
+  },
   down: qi => qi.dropTable(TABLE_NAME)
 };
 
@@ -38,3 +41,9 @@ const getColumns = ({ DATE, INTEGER, STRING }) => ({
     field: 'deleted_at'
   }
 });
+
+function addConstraints(qi) {
+  const fields = ['make', 'model', 'year'];
+  const options = { type: 'unique', name: 'vehicle_idx', fields };
+  return qi.addConstraint(TABLE_NAME, options);
+}

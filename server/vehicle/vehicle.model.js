@@ -2,13 +2,18 @@
 
 const { Model } = require('sequelize');
 const Promise = require('bluebird');
-const { UniqueConstraintError } = require('sequelize');
 
 const pTuple = fn => Promise.try(fn).then(result => [null, result], err => [err]);
 
 class Vehicle extends Model {
   static fields({ DATE, INTEGER, STRING }) {
     return {
+      id: {
+        type: INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+      },
       make: {
         type: STRING
       },
@@ -43,17 +48,13 @@ class Vehicle extends Model {
   }
 
   static async restoreOrCreate({ id, ...payload }) {
-    return pTuple(async () => {
-      if (id) {
-        const vehicle = await Vehicle.findByPk(id, { paranoid: false });
-        if (vehicle.deletedAt) vehicle.setDataValue('deletedAt', null);
-        return vehicle.save();
-      }
-      const found = await Vehicle.findOne({ where: payload });
-      if (!found) return Vehicle.create(payload);
-      const message = 'Vehicle already exists';
-      throw new UniqueConstraintError({ message });
-    });
+    return pTuple(() => id ? this.restore(id) : Vehicle.create(payload));
+  }
+
+  static async restore(id) {
+    const vehicle = await Vehicle.findByPk(id, { paranoid: false });
+    if (vehicle.deletedAt) vehicle.setDataValue('deletedAt', null);
+    return vehicle.save();
   }
 }
 
