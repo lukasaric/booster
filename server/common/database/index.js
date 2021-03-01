@@ -62,9 +62,8 @@ function initialize() {
 
   return sequelize.authenticate()
     .then(() => logger.info(getConfig(sequelize), '🗄️  Connected to database'))
-    .then(() => checkPostgreVersion(sequelize))
+    .then(() => checkPostgrePrerequisites(sequelize))
     .then(() => !isProduction && umzug.up())
-    .then(() => processPostgreExtensions(sequelize))
     .then(() => umzug.executed())
     .then(migrations => {
       const files = migrations.map(it => it.file);
@@ -116,24 +115,23 @@ function getConfig(sequelize) {
   ]);
 }
 
-function checkPostgreVersion(sequelize) {
+async function checkPostgrePrerequisites(sequelize) {
+  await processPostgreExtensions(sequelize);
   const type = sequelize.QueryTypes.VERSION;
-  return sequelize.query('SHOW server_version', { type })
-    .then(version => {
-      logger.info({ version }, 'PostgreSQL version:', version);
-      const range = pkg.engines && pkg.engines.postgres;
-      if (!range) return;
-      if (semver.satisfies(semver.coerce(version), range)) return;
-      const err = new Error(`"${pkg.name}" requires PostgreSQL ${range}`);
-      logger.error({ version, required: range }, err.message);
-      return Promise.reject(err);
-    });
+  const version = await sequelize.query('SHOW server_version', { type });
+  logger.info({ version }, 'PostgreSQL version:', version);
+  const range = pkg.engines && pkg.engines.postgres;
+  if (!range) return;
+  if (semver.satisfies(semver.coerce(version), range)) return;
+  const err = new Error(`"${pkg.name}" requires PostgreSQL ${range}`);
+  logger.error({ version, required: range }, err.message);
+  return Promise.reject(err);
 }
 
 async function processPostgreExtensions(sequelize) {
   const [extensions] = await sequelize.query('SELECT * FROM pg_extension', { raw: true });
-  const isExtensionInstalled = extensions.some(it => it.extname === DATABASE_EXTENSION);
-  if (isExtensionInstalled) return;
+  const extensionExists = extensions.some(it => it.extname === DATABASE_EXTENSION);
+  if (extensionExists) return;
   return sequelize.query(`CREATE EXTENSION ${DATABASE_EXTENSION};`);
 }
 
