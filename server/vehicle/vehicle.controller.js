@@ -5,15 +5,21 @@ const { Sequelize, Vehicle } = require('../common/database');
 const { createError } = require('../common/errors');
 const pick = require('lodash/pick');
 
-const { Op, fn, col, literal } = Sequelize;
+const { Op, fn, col, literal, cast } = Sequelize;
 
 const inputAttrs = ['id', 'make', 'model', 'year'];
 
 function createFuzzySearch(where, options, search) {
   search = search.toUpperCase();
-  const make = Sequelize.where(fn('levenshtein', col('make'), search), '<=', 5);
-  const order = [literal([`levenshtein('${search}', make)`])];
-  where[Op.and].push(make);
+  const yearColumn = cast(col('year'), 'varchar');
+  const concat = fn('concat', col('make'), col('model'), yearColumn);
+  const whereCond = Sequelize.where(fn('levenshtein', concat, search), '<=', 10);
+  const order = [
+    literal([`levenshtein('${search}', make)`]),
+    literal([`levenshtein('${search}', model)`]),
+    literal([`levenshtein('${search}', cast(year as VARCHAR))`])
+  ];
+  where[Op.and].push(whereCond);
   options.order = order;
 }
 
@@ -21,7 +27,7 @@ async function list({ query, options }, res) {
   const { fuzzyResult, search } = query;
   const where = { [Op.and]: [] };
   if (search) createFuzzySearch(where, options, search);
-  if (fuzzyResult) where[Op.and].push({ make: JSON.parse(fuzzyResult).make });
+  if (fuzzyResult) where[Op.and].push({ id: JSON.parse(fuzzyResult).id });
   const { rows, count } = await Vehicle.findAndCountAll({ ...options, where });
   return res.jsend.success({ items: rows, total: count });
 }

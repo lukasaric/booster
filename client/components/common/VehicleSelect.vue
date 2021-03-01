@@ -6,13 +6,13 @@
     :items="items"
     :search-input.sync="search"
     :no-data-text="noDataLabel"
-    placeholder="Search by brand"
+    placeholder="Search"
     return-object no-filter>
-    <template #selection="{ item }">
-      {{ item.make }} ({{ item.model }})
+    <template #selection="{ item: { make, model, year } }">
+      {{ make }} ({{ model }} - {{ year }})
     </template>
-    <template #item="{ item }">
-      {{ item.make }} ({{ item.model }})
+    <template #item="{ item: { make, model, year } }">
+      {{ make }} ({{ model }} - {{ year }})
     </template>
   </v-autocomplete>
 </template>
