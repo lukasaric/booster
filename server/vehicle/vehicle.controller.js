@@ -23,10 +23,10 @@ function createFuzzySearch(where, options, search) {
 }
 
 async function list({ query, options }, res) {
-  const { fuzzyResult, search } = query;
+  const { vehicleId, search } = query;
   const where = { [Op.and]: [] };
   if (search) createFuzzySearch(where, options, search);
-  if (fuzzyResult) where[Op.and].push({ id: JSON.parse(fuzzyResult).id });
+  if (vehicleId) where[Op.and].push({ id: vehicleId });
   const { rows, count } = await Vehicle.findAndCountAll({ ...options, where });
   return res.jsend.success({ items: rows, total: count });
 }
