@@ -15,8 +15,8 @@ module.exports = {
     issuer: process.AUTH_JWT_ISSUER || 'booster'
   },
   mail: {
-    username: process.env.MAILGUN_USERNAME,
-    key: process.env.MAILGUN_API_KEY,
-    url: process.env.MAILGUN_URL
+    sender: process.env.EMAIL_SENDER_NAME,
+    domain: process.env.MAILGUN_DOMAIN,
+    key: process.env.MAILGUN_API_KEY
   }
 };

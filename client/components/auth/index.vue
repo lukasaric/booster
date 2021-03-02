@@ -11,7 +11,7 @@
           <div class="headline-container">
             <h1 class="mt-3 mb-2 text-h5">Booster</h1>
             <v-divider />
-            <h2 class="text-subtitle-2">Vehicle management system</h2>
+            <h2 class="text-subtitle-2">Vehicle Management System</h2>
           </div>
         </div>
         <div class="auth-body">
