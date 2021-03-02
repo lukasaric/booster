@@ -1,20 +1,28 @@
-const api = require('@/api/vehicle').default;
+const vehicleApi = require('@/api/vehicle').default;
 
-const mockApiHelper = apiMethod => jest.mock('@/api/vehicle', () => () => ({ api: apiMethod }));
+jest.mock('@/api/request', () => {
+  const item = { id: 1, make: 'AUDI', model: 'A3', make: 2010 };
+  const items = [
+    item,
+    { id: 2, make: 'ACURA', model: 'X1', make: 2000 },
+    { id: 3, make: 'HONDA', model: 'X2', make: 2005 }
+  ];
+  return {
+    get: jest.fn().mockResolvedValue({ data: { data: { items }} }),
+    post: jest.fn().mockResolvedValue({ data: { data: { item }} })
+  };
+});
 
 describe('Test Vehicle API', () => {
   it('should fetch vehicles properly', async () => {
-    const items = [
-      { id: 1, make: 'AUDI', model: 'A3', make: 2010 },
-      { id: 2, make: 'ACURA', model: 'X1', make: 2000 },
-      { id: 3, make: 'HONDA', model: 'X2', make: 2005 }
-    ];
-    mockApiHelper({ fetch: () => Promise.resolve({ items }) });
-    // expect(api).toHaveBeenCalledTimes(1)
+    const params = {};
+    const vehicles = await vehicleApi.fetch(params);
+    expect(vehicles).toBeTruthy();
   });
 
-  it('should softly remove vehicle', async () => {
-    mockApiHelper({ fetch: () => Promise.resolve() })
-    // expect(api).toHaveBeenCalledTimes(1)
+  it('should create vehicle', async () => {
+    const payload = { make: 'AUDI', model: 'A3', make: 2010 };
+    const vehicle = await vehicleApi.create(payload);
+    expect(vehicle).toBeTruthy();
   });
 });
