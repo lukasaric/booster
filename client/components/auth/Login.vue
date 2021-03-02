@@ -54,6 +54,9 @@
         </v-btn>
       </div>
       <div class="options">
+        <router-link :to="{ name: 'forgot-password' }">
+          Forgot password?
+        </router-link>
         <router-link :to="{ name: 'register' }">
           You don't have account?
         </router-link>
@@ -90,7 +93,7 @@ export default {
 <style lang="scss" scoped>
 .options {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 0.875rem 0 0.25rem;
   text-align: right;

@@ -5,7 +5,9 @@ import request from './request';
 const urls = {
   root: '/users',
   login: () => path.join(urls.root, 'login'),
-  register: () => path.join(urls.root, 'register')
+  register: () => path.join(urls.root, 'register'),
+  forgotPassword: () => path.join(urls.root, 'forgot-password'),
+  resetPassword: () => path.join(urls.root, 'reset-password')
 };
 
 function login(credentials) {
@@ -31,9 +33,19 @@ function count(params = {}) {
     .then(extractData);
 }
 
+function forgotPassword(email) {
+  return request.post(urls.forgotPassword(), { email });
+}
+
+function resetPassword(body) {
+  return request.post(urls.resetPassword(), body);
+}
+
 export default {
   login,
   register,
   logout,
-  count
+  count,
+  forgotPassword,
+  resetPassword
 };

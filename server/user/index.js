@@ -1,14 +1,17 @@
 'use strict';
 
-const auth = require('../common/auth');
+const { authenticate } = require('../common/auth');
 const ctrl = require('./user.controller');
 const router = require('express').Router();
 
 router
   .post('/register', ctrl.register)
   .get('/', ctrl.count)
-  .post('/login', auth.authenticate('local'), ctrl.login)
-  .use(auth.authenticate('jwt'))
+  .post('/forgot-password', ctrl.forgotPassword)
+  .post('/reset-password', authenticate('token'), ctrl.resetPassword)
+  .post('/login', authenticate('local'), ctrl.login);
+
+router.use(authenticate('jwt'))
   .post('/logout', ctrl.logout);
 
 module.exports = {

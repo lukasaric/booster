@@ -73,12 +73,8 @@
           outlined />
       </validation-provider>
       <div class="d-flex justify-end mt-1">
-        <v-btn
-          :to="{ name: 'login' }"
-          color="blue-grey"
-          dark rounded depressed
-          class="white--text mr-2">
-          Back
+        <v-btn @click="$router.go(-1)" tag="a" text rounded class="mr-3">
+          <v-icon class="pr-2">mdi-arrow-left</v-icon>Back
         </v-btn>
         <v-btn
           type="submit"

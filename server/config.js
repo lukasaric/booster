@@ -11,6 +11,12 @@ module.exports = {
   auth: {
     scheme: process.env.AUTH_JWT_SCHEME || 'JWT',
     secret: process.env.AUTH_JWT_SECRET,
-    saltRounds: parseInt(process.env.AUTH_SALT_ROUNDS, 10)
+    saltRounds: parseInt(process.env.AUTH_SALT_ROUNDS, 10),
+    issuer: process.AUTH_JWT_ISSUER || 'booster'
+  },
+  mail: {
+    username: process.env.MAILGUN_USERNAME,
+    key: process.env.MAILGUN_API_KEY,
+    url: process.env.MAILGUN_URL
   }
 };

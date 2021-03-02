@@ -6,7 +6,7 @@ const HttpStatus = require('http-status');
 const pick = require('lodash/pick');
 const { User } = require('../common/database');
 
-const { CONFLICT, CREATED } = HttpStatus;
+const { CONFLICT, CREATED, NO_CONTENT, NOT_FOUND } = HttpStatus;
 
 const inputAttrs = ['email', 'firstName', 'lastName', 'password'];
 
@@ -31,6 +31,19 @@ function logout(_, res) {
   return res.end();
 }
 
+async function forgotPassword({ body }, res) {
+  const where = { email: body.email };
+  const user = await User.findOne({ where });
+  if (!user) return createError(NOT_FOUND, 'User not found');
+  user.sendResetToken();
+  return res.end();
+}
+
+async function resetPassword({ body, user }, res) {
+  await user.update({ password: body.password });
+  res.sendStatus(NO_CONTENT);
+}
+
 async function count({ query: { email } }, res) {
   const where = {};
   if (email) where.email = email;
@@ -38,8 +51,10 @@ async function count({ query: { email } }, res) {
 }
 
 module.exports = {
-  count,
   register,
   login,
-  logout
+  logout,
+  forgotPassword,
+  resetPassword,
+  count
 };

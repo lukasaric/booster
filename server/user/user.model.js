@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const compact = require('lodash/compact');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
+const mail = require('../common/mail');
 const { Model } = require('sequelize');
 const pick = require('lodash/pick');
 const { Role } = require('../../common/config');
@@ -78,7 +79,10 @@ class User extends Model {
 
   static hooks() {
     return {
-      beforeCreate: user => user.encryptPassword()
+      beforeCreate: user => user.encryptPassword(),
+      beforeUpdate: user => user.changed('password')
+        ? user.encryptPassword()
+        : Promise.resolve()
     };
   }
 
@@ -94,14 +98,26 @@ class User extends Model {
   }
 
   createToken(options = {}) {
-    const payload = pick(this, ['id', 'email']);
-    return jwt.sign(payload, config.auth.secret, options);
+    const payload = { id: this.id, email: this.email };
+    Object.assign(options, {
+      issuer: config.auth.issuer,
+      audience: options.audience || Audience.Scope.Access
+    });
+    return jwt.sign(payload, this.getTokenSecret(options.audience), options);
+  }
+
+  sendResetToken() {
+    const token = this.createToken({
+      audience: Audience.Scope.Setup,
+      expiresIn: '2 days'
+    });
+    mail.resetPassword(this, token);
   }
 
   getTokenSecret(audience) {
-    const { secret } = config.auth.jwt;
+    const { secret } = config.auth;
     if (audience === Audience.Scope.Access) return secret;
-    return [secret, this.password, this.createdAt.getTime()].join('');
+    return [secret, this.password, this.updatedAt.getTime()].join('');
   }
 }
 
