@@ -1,5 +1,6 @@
 'use strict';
 
+const { createLogger, Level } = require('./logger');
 const { mail } = require('../config');
 const { origin } = require('./origin');
 const urlJoin = require('url-join');
@@ -9,16 +10,21 @@ const mailgun = require('mailgun-js')(options);
 
 const resetUrl = token => urlJoin(origin, '/#/reset-password/', token);
 
+const logger = createLogger('mailer', { level: Level.DEBUG });
+
 module.exports = { resetPassword };
 
-async function resetPassword(user, token) {
+function resetPassword(user, token) {
   const href = resetUrl(token);
   const body = {
     from: mail.sender,
     to: user.email,
     subject: 'Reset password',
-    text: 'Click link below to reset password',
-    html: `<a>${href}</a>`
+    html: `<div>
+      <p>Click link below to reset password:</p>
+      <br>
+      <a href="${href}" target="_blank" rel="noopener">Reset password link</a
+    </div>`
   };
-  return mailgun.messages().send(body, (_, body) => console.log(body));
+  return mailgun.messages().send(body, (_, body) => logger.info(body));
 }
