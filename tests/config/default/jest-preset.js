@@ -13,11 +13,9 @@ module.exports = {
   // support the same @ -> src alias mapping in source code
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>client/$1',
-    '^utils/(.*)$': '<rootDir>/client/utils/$1',
     '^shared(.*)$': '<rootDir>/config/shared$1'
     // '^extensions/(.*)$': '<rootDir>/extensions/$1'
   },
-  modulePaths: ['<rootDir>/client/utils/activity/'],
   collectCoverageFrom: [
     // For now only the client folder
     '<rootDir>/client/**/*.{js,jsx}',
