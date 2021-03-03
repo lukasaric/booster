@@ -1,6 +1,6 @@
 'use strict';
 
-const { port: PORT, reverseProxyPort } = require('../config');
+const { hostname, port: PORT, reverseProxyPort } = require('../config');
 
 const port = PORT || 5000;
 const origin = resolveOrigin();
@@ -10,8 +10,8 @@ module.exports = {
   origin
 };
 
-function resolveOrigin(hostname = 'localhost', protocol = 'http') {
-  return `${protocol}://${hostname}${resolveOriginPort(hostname)}`;
+function resolveOrigin(protocol = 'http') {
+  return `${protocol}://${hostname || 'localhost'}${resolveOriginPort(hostname)}`;
 }
 
 function resolveOriginPort() {
