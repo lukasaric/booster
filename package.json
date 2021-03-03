@@ -105,6 +105,8 @@
     "vuetify-loader": "^1.6.0"
   },
   "engines": {
+    "node": ">= 12.x",
+    "npm": ">= 6.11.0",
     "postgres": ">= 9.4"
   },
   "vuePlugins": {

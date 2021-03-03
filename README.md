@@ -3,7 +3,7 @@
 ## :page_with_curl: Dependencies
 
 <!-- ENGINES-LIST:START - Do NOT remove or modify this section -->
-- **node** (>= 10.x)
+- **node** (>= 12.x)
 - **npm** (>= 6.11.0)
 - **postgres** (>= 9.4)
 <!-- ENGINES-LIST:END -->
@@ -37,10 +37,11 @@ Check `engines` field in [`package.json`](package.json)
 
 ### Continuous Deployment
 - Circle CI :rocket:
-### Production
+### Production :airplane:
 
 - Bundle client by issuing `npm run build`
 - Create [Heroku](https://dashboard.heroku.com/) acc & app
 - Then on Heroku app GUI, select `deploy` tab and follow the instructions
 - Set all `.env` variables within heroku `settings` tab
 - Also you can run `seed` script via heroku console inside heroku app
+- App is live on: [Booster](https://booster-service.herokuapp.com/#/)
