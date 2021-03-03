@@ -57,6 +57,7 @@
     "safe-require": "^1.0.4",
     "sass-web-fonts": "^2.1.0",
     "sequelize": "^6.5.0",
+    "umzug": "^2.3.0",
     "url-join": "^4.0.1",
     "vee-validate": "^3.4.5",
     "vue": "^2.6.12",

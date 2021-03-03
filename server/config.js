@@ -6,6 +6,7 @@ module.exports = {
   hostname: process.env.HOSTNAME,
   port: process.env.SERVER_PORT,
   ip: process.env.IP,
+  reverseProxyPort: process.env.REVERSE_PROXY_PORT,
   apiPath: process.env.API_PATH || '/api',
   staticFolder: path.resolve(__dirname, '../dist'),
   auth: {

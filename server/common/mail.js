@@ -1,14 +1,14 @@
 'use strict';
 
 const { createLogger, Level } = require('./logger');
-const { mail } = require('../config');
+const { hostname, mail } = require('../config');
 const { origin } = require('./origin');
 const urlJoin = require('url-join');
 
 const options = { apiKey: mail.key, domain: mail.domain };
 const mailgun = require('mailgun-js')(options);
 
-const resetUrl = token => urlJoin(origin, '/#/auth/reset-password/', token);
+const resetUrl = token => urlJoin(origin(hostname), '/#/auth/reset-password/', token);
 
 const logger = createLogger('mailer', { level: Level.DEBUG });
 

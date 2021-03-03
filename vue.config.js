@@ -8,7 +8,7 @@ module.exports = {
   outputDir: path.resolve(__dirname, './dist'),
   devServer: {
     // Override using: `npm run dev:client -- --port <number>`
-    port: 8080,
+    port: config.reverseProxyPort,
     proxy: {
       '/api': {
         target: `http://${config.ip}:${config.port}`
