@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   hostname: process.env.HOSTNAME,
-  port: process.env.SERVER_PORT,
+  port: process.env.PORT || process.env.SERVER_PORT || 5000,
   ip: process.env.IP,
   reverseProxyPort: process.env.REVERSE_PROXY_PORT,
   apiPath: process.env.API_PATH || '/api',
