@@ -35,7 +35,12 @@ Check `engines` field in [`package.json`](package.json)
 - Server: `npm run dev:server`
 - Client: `npm run dev:client`
 
+### Continuous Deployment
+- Circle CI :rocket:
 ### Production
 
 - Bundle client by issuing `npm run build`
-- `npm run start`
+- Create [Heroku](https://dashboard.heroku.com/) acc & app
+- Then on Heroku app GUI, select `deploy` tab and follow the instructions
+- Set all `.env` variables within heroku `settings` tab
+- Also you can run `seed` script via heroku console inside heroku app

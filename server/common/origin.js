@@ -1,17 +1,18 @@
 'use strict';
 
-const { hostname, port: PORT, reverseProxyPort } = require('../config');
+const { hostname, port, reverseProxyPort } = require('../config');
 
-const port = PORT || 5000;
-const origin = resolveOrigin();
+const isProduction = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  port,
-  origin
+  origin: resolveOrigin()
 };
 
-function resolveOrigin(protocol = 'http') {
-  return `${protocol}://${hostname || 'localhost'}${resolveOriginPort(hostname)}`;
+function resolveOrigin(protocol = 'https') {
+  const host = !isProduction
+    ? `${hostname || 'localhost'}${resolveOriginPort()}`
+    : hostname;
+  return `${protocol}://${host}`;
 }
 
 function resolveOriginPort() {
