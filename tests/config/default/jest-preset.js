@@ -1,5 +1,3 @@
-'use strict';
-
 module.exports = {
   moduleFileExtensions: ['js', 'jsx', 'json', 'vue'],
   transform: {

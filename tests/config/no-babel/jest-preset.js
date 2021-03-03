@@ -1,5 +1,3 @@
-'use strict';
-
 const deepmerge = require('deepmerge');
 const defaultPreset = require('../default/jest-preset');
 
