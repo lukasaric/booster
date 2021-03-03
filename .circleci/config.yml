@@ -36,5 +36,5 @@ jobs:
 
 orbs:
   node: circleci/node@3.0.0
-  heroku: circleci/heroku@0.0.10.
+  heroku: circleci/heroku@1.2.5
 
