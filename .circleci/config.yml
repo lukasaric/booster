@@ -1,0 +1,27 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/node:lts-browsers
+    steps:
+    - checkout
+
+    - run:
+        name: Install dependencies
+        command: npm install
+
+    - run:
+        name: Lint codebase
+        command: npm run lint:js
+
+    - run:
+        name: Run tests
+        command: npm run test
+
+    - run:
+        name: Run build
+        command: npm run build
+orbs:
+  node: circleci/node@3.0.0
+
