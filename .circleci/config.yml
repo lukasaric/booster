@@ -1,5 +1,16 @@
 version: 2.1
 
+workflows:
+  heroku_deploy:
+    jobs:
+      - build
+      - heroku/deploy-via-git:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+
 jobs:
   build:
     docker:
@@ -23,9 +34,7 @@ jobs:
         name: Run build
         command: npm run build
 
-    - run:
-        name: Deploy
-        command: git push heroku main
 orbs:
   node: circleci/node@3.0.0
+  heroku: circleci/heroku@0.0.10.
 
