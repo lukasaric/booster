@@ -3,7 +3,7 @@
     <v-toolbar-title>
       <router-link :to="{ name: 'vehicles' }" class="d-flex align-center">
         <v-icon size="24" color="secondary" class="mr-2">mdi-car-outline</v-icon>
-        <span class="white--text">Booster</span>
+        <span class="app-title white--text">Booster</span>
         <v-divider vertical class="mx-2" />
         <span class="subtitle mt-1">Vehicle System Management</span>
       </router-link>
@@ -13,8 +13,10 @@
       <template v-slot:activator="{ on }">
         <div v-on="on" class="dropdown-activator">
           <v-icon size="24" class="mr-1">mdi-account-circle</v-icon>
-          <span>{{ user.email }}</span>
-          <v-icon size="24" class="mr-1">mdi-chevron-down</v-icon>
+          <template v-if="!$vuetify.breakpoint.mobile">
+            <span>{{ user.email }}</span>
+            <v-icon size="24" class="mr-1">mdi-chevron-down</v-icon>
+          </template>
         </div>
       </template>
       <v-list>
@@ -41,10 +43,23 @@ export default {
 
 <style lang="scss" scoped>
 .subtitle {
-  font-size: 0.875rem;
   color: #fff;
+  font-size: 0.875rem;
 }
+
 .dropdown-activator {
   cursor: pointer;
+}
+
+@media screen and (max-width: 56.25rem) {
+  .v-toolbar__title {
+    .app-title {
+      font-size: 1.125rem;
+    }
+
+    .subtitle {
+      font-size: 0.75rem;
+    }
+  }
 }
 </style>

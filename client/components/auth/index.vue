@@ -80,4 +80,15 @@ export default {
   width: 100%;
   height: 15rem;
 }
+
+@media screen and (max-width: 56.25rem) {
+  .auth-container .auth-panel-container {
+    width: 21rem;
+    margin: 10% auto;
+  }
+
+  .auth-body a {
+    font-size: 0.875rem;
+  }
+}
 </style>

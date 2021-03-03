@@ -33,10 +33,6 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.v-main {
-  background-color: #f5f5f5;
-}
-
 input:-webkit-autofill {
   transition-delay: 99999s;
 }

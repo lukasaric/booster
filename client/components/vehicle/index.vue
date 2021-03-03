@@ -15,8 +15,9 @@
           class="my-2 archived-checkbox" />
       </v-col>
       <v-col lg="8" md="6" class="d-flex justify-end">
-        <v-btn @click="showDialog = true" text>
-          <v-icon dense class="mr-1">mdi-plus</v-icon>Create Vehicle
+        <v-btn @click="showDialog = true" text class="create-btn">
+          <v-icon dense class="mr-1">mdi-plus</v-icon>
+          Create Vehicle
         </v-btn>
         <create-dialog
           @created="fetch(defaultPage)"
@@ -53,8 +54,8 @@
                 </p>
               </v-card-text>
               <v-card-actions class="justify-end">
-                <v-btn @click="removeOrRestore(item)" color="secondary" text>
-                  <v-icon class="mr-1">mdi-{{ getLabel(item) }}</v-icon>
+                <v-btn @click="removeOrRestore(item)" color="secondary" text small>
+                  <v-icon class="mr-1" small>mdi-{{ getLabel(item) }}</v-icon>
                   {{ getLabel(item) }}
                 </v-btn>
               </v-card-actions>
@@ -141,6 +142,17 @@ export default {
     label {
       font-size: 0.875rem;
     }
+  }
+}
+
+@media screen and (max-width: 56.25rem) {
+  .toolbar {
+    flex-direction: column;
+  }
+
+  .create-btn {
+    width: 100%;
+    margin-bottom: 1rem;
   }
 }
 </style>

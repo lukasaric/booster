@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="show" no-click-animation persistent width="500">
+  <v-dialog v-model="show" width="500" no-click-animation persistent>
     <v-card>
       <v-card-title primary-title class="primary mb-6">
         <v-avatar color="primary lighten-1" size="38" class="mr-3">
