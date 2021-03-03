@@ -16,8 +16,8 @@ const runServer = promisify(app.listen.bind(app));
 
 database.initialize()
   .then(() => runServer(port, ip))
-  .then(() => logger.info({ port, ip }, '✈️  Server listening on', address))
+  .then(() => logger.info({ port, ip }, 'Server listening on', address))
   .catch(err => {
-    logger.fatal(err, '🚨  Starting server failed');
+    logger.fatal(err, 'Starting server failed');
     process.exit(1);
   });

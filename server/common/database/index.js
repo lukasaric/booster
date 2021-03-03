@@ -55,20 +55,20 @@ function initialize() {
     }
   });
 
-  umzug.on('migrating', migration => logger.info({ migration }, '⬆️  Migrating:', migration));
-  umzug.on('migrated', migration => logger.info({ migration }, '⬆️  Migrated:', migration));
-  umzug.on('reverting', migration => logger.info({ migration }, '⬇️  Reverting:', migration));
-  umzug.on('reverted', migration => logger.info({ migration }, '⬇️  Reverted:', migration));
+  umzug.on('migrating', migration => logger.info({ migration }, 'Migrating:', migration));
+  umzug.on('migrated', migration => logger.info({ migration }, 'Migrated:', migration));
+  umzug.on('reverting', migration => logger.info({ migration }, 'Reverting:', migration));
+  umzug.on('reverted', migration => logger.info({ migration }, 'Reverted:', migration));
 
   return sequelize.authenticate()
-    .then(() => logger.info(getConfig(sequelize), '🗄️  Connected to database'))
+    .then(() => logger.info(getConfig(sequelize), 'Connected to database'))
     .then(() => checkPostgrePrerequisites(sequelize))
     .then(() => !isProduction && umzug.up())
     .then(() => umzug.executed())
     .then(migrations => {
       const files = migrations.map(it => it.file);
       if (!files.length) return;
-      logger.info({ migrations: files }, '🗄️  Executed migrations:\n', files.join('\n'));
+      logger.info({ migrations: files }, 'Executed migrations:\n', files.join('\n'));
     });
 }
 
