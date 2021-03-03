@@ -95,6 +95,7 @@
     "sass": "^1.32.4",
     "sass-loader": "^8.0.0",
     "sequelize-cli": "^6.2.0",
+    "stylelint": "^13.11.0",
     "vue-template-compiler": "^2.6.11",
     "vuetify-loader": "^1.6.0"
   },
