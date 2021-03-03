@@ -15,6 +15,16 @@ module.exports = {
       }
     }
   },
+  pages: {
+    index: {
+      entry: './client/main.js',
+      template: 'public/index.html',
+      title: 'Booster',
+      filename: 'index.html',
+      chunks: ['chunk-vendors', 'chunk-common', 'index']
+    }
+  },
+  runtimeCompiler: true,
   pluginOptions: {
     envs: {
       API_PATH: config.apiPath,

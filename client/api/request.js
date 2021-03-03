@@ -43,11 +43,8 @@ Object.defineProperty(client, 'base', {
 
 client.interceptors.request.use(config => {
   const { token } = client.auth;
-  if (token) {
-    config.headers.Authorization = `${authScheme} ${token}`;
-    return config;
-  }
-  delete config.headers.Authorization;
+  if (token) config.headers.Authorization = `${authScheme} ${token}`;
+  else delete config.headers.Authorization;
   return config;
 });
 
