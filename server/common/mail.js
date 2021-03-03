@@ -8,7 +8,7 @@ const urlJoin = require('url-join');
 const options = { apiKey: mail.key, domain: mail.domain };
 const mailgun = require('mailgun-js')(options);
 
-const resetUrl = token => urlJoin(origin, '/#/reset-password/', token);
+const resetUrl = token => urlJoin(origin, '/#/auth/reset-password/', token);
 
 const logger = createLogger('mailer', { level: Level.DEBUG });
 
