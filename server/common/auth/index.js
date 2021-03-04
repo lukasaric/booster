@@ -17,7 +17,7 @@ passport.use(new LocalStrategy(options, (email, password, done) => {
   return User.findOne({ where: { email } })
     .then(user => user && user.authenticate(password))
     .then(user => done(null, user || false))
-    .error(err => done(err, false));
+    .catch(err => done(err, false));
 }));
 
 const jwtOptions = {
@@ -61,5 +61,5 @@ function secretOrKeyProvider(_, rawToken, done) {
 function verifyJWT(payload, done) {
   return User.findByPk(payload.id)
     .then(user => done(null, user || false))
-    .error(err => done(err, false));
+    .catch(err => done(err, false));
 }

@@ -30,7 +30,6 @@ const defineModel = Model => {
   const fields = invoke(Model, 'fields', DataTypes, sequelize) || {};
   const hooks = invoke(Model, 'hooks') || {};
   const options = invoke(Model, 'options') || {};
-  wrapMethods(Model, Promise);
   return Model.init(fields, { sequelize, hooks, ...options });
 };
 
@@ -90,7 +89,6 @@ const db = {
   ...models
 };
 
-wrapMethods(Sequelize.Model, Promise);
 // Patch Sequelize#method to support getting models by class name.
 sequelize.model = name => sequelize.models[name] || db[name];
 
