@@ -11,7 +11,6 @@ const result = require('lodash/result');
 const semver = require('semver');
 const Sequelize = require('sequelize');
 const Umzug = require('umzug');
-const { wrapMethods } = require('./helpers');
 const logger = require('../logger')('db');
 
 // Require models.
