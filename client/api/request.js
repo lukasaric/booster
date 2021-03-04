@@ -34,6 +34,13 @@ class Auth extends EventEmitter {
 const client = axios.create(config);
 client.auth = new Auth();
 
+Object.defineProperty(client, 'base', {
+  get() {
+    if (!this.base_) this.base_ = axios.create(config);
+    return this.base_;
+  }
+});
+
 client.interceptors.request.use(config => {
   const { token } = client.auth;
   if (token) config.headers.Authorization = `${authScheme} ${token}`;
