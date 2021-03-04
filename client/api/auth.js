@@ -11,7 +11,7 @@ const urls = {
 };
 
 function login(credentials) {
-  return request.base.post(urls.login(), credentials)
+  return request.post(urls.login(), credentials)
     .then(extractData)
     .then(({ token, user }) => {
       request.auth.token = token;
